@@ -1,8 +1,12 @@
 package dev.ynnk.m295.controller;
 
+import dev.ynnk.m295.helper.validation.Create;
 import dev.ynnk.m295.model.User;
 import dev.ynnk.m295.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,17 +33,18 @@ public class UserController {
     }
 
     @PostMapping("/api/v1/user")
-    public User createUser(@RequestBody @Valid User user){
+    public User createUser(@RequestBody @Validated(value = {Default.class, Create.class}) User user){
         return this.service.saveUser(user);
     }
 
     @PatchMapping("/api/v1/user/{id}")
-    public User patchUser(@RequestBody User partialUser, @PathVariable("id") Long id){
-        return this.service.patchUser(partialUser,id);
+    public User patchUser(@RequestBody User partialUser, @PathVariable("id") String id, Errors errors){
+        System.out.println("Got Here");
+        return this.service.patchUser(partialUser,Long.parseLong(id));
     }
     
     @PutMapping("/api/v1/user/{id}")
-    public User updateUser(@RequestBody @Valid User user, @PathVariable("id") Long id){
+    public User updateUser(@RequestBody @Validated(value = {Default.class, Create.class}) User user, @PathVariable("id") Long id){
         return this.service.updateUser(user, id);
     }
 }
