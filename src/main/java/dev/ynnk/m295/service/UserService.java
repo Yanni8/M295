@@ -37,37 +37,29 @@ public class UserService {
     }
 
     public void deleteUser(long id){
-        Optional<User> optionalUser = this.userRepository.findById(id);
-
-        if (optionalUser.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    ErrorMessage.notFoundById("User", id));
-        }
-
+        this.getUserById(id);
         this.userRepository.deleteById(id);
     }
 
     public User patchUser(User user, long id){
 
-        User dbUser = this.userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        ErrorMessage.notFoundById("User", id)));
-
+        User dbUser = this.getUserById(id);
 
         User patchedUser = AutoPatch.patch(user, dbUser);
         if (patchedUser == null){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
                     ErrorMessage.support(512));
         }
+
+        this.userRepository.save(patchedUser);
+
         return patchedUser;
     }
 
 
     public User updateUser(User user, long id){
         user.setId(id);
-        this.userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        ErrorMessage.notFoundById("User", id)));
+        this.getUserById(id);
         return this.userRepository.save(user);
     }
 

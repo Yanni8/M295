@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collection;
 
 public final class AutoPatch {
     private final static Logger LOG = LoggerFactory.getLogger(AutoPatch.class);
@@ -36,8 +37,14 @@ public final class AutoPatch {
                 continue;
             }
 
+            if (providedValue.getClass().isAssignableFrom(Collection.class)
+                    && ((Collection) providedValue).size() == 0){
+                continue;
+            }
+
             String setterName = fieldToSetter(field.getName());
-            Method setterMethod = cls.getMethod(setterName, providedValue.getClass());
+
+            Method setterMethod = cls.getMethod(setterName, field.getType());
 
             setterMethod.invoke(dbObject, providedValue);
         }

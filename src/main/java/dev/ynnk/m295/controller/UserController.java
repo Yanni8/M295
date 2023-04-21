@@ -1,7 +1,9 @@
 package dev.ynnk.m295.controller;
 
 import dev.ynnk.m295.helper.validation.Create;
+import dev.ynnk.m295.model.Group;
 import dev.ynnk.m295.model.User;
+import dev.ynnk.m295.service.GroupService;
 import dev.ynnk.m295.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
@@ -38,13 +40,18 @@ public class UserController {
     }
 
     @PatchMapping("/api/v1/user/{id}")
-    public User patchUser(@RequestBody User partialUser, @PathVariable("id") String id, Errors errors){
+    public User patchUser(@RequestBody User partialUser, @PathVariable("id") Long id){
         System.out.println("Got Here");
-        return this.service.patchUser(partialUser,Long.parseLong(id));
+        return this.service.patchUser(partialUser,id);
     }
     
     @PutMapping("/api/v1/user/{id}")
     public User updateUser(@RequestBody @Validated(value = {Default.class, Create.class}) User user, @PathVariable("id") Long id){
         return this.service.updateUser(user, id);
+    }
+
+    @DeleteMapping("/api/v1/user/{id}")
+    public void deleteGroup(@PathVariable("id") Long id){
+        this.service.deleteUser(id);
     }
 }
