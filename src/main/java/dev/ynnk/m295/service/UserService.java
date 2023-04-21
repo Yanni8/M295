@@ -1,5 +1,6 @@
 package dev.ynnk.m295.service;
 
+import dev.ynnk.m295.helper.language.ErrorMessage;
 import dev.ynnk.m295.model.User;
 import dev.ynnk.m295.repository.UserRepository;
 import dev.ynnk.m295.helper.patch.AutoPatch;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,7 +25,7 @@ public class UserService {
 
     public User saveUser(User user){
         if (user == null){
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "You need to provide a User");
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, ErrorMessage.noObjectPresent("user"));
         }
         return this.userRepository.save(user);
     }
@@ -31,7 +33,7 @@ public class UserService {
     public User getUserById(long id){
         return this.userRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "There doesn't exist a user with the id "  + id + " in the Database" ));
+                        ErrorMessage.notFoundById("User", id)));
     }
 
     public void deleteUser(long id){
@@ -39,7 +41,7 @@ public class UserService {
 
         if (optionalUser.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "There doesn't exist a user with the id "  + id + " in the Database" );
+                    ErrorMessage.notFoundById("User", id));
         }
 
         this.userRepository.deleteById(id);
@@ -49,14 +51,28 @@ public class UserService {
 
         User dbUser = this.userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "There doesn't exist a user with the id "  + id + " in the Database" ));
+                        ErrorMessage.notFoundById("User", id)));
 
 
         User patchedUser = AutoPatch.patch(user, dbUser);
         if (patchedUser == null){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Patch process failed!");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    ErrorMessage.support(512));
         }
         return patchedUser;
+    }
+
+
+    public User updateUser(User user, long id){
+        user.setId(id);
+        this.userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        ErrorMessage.notFoundById("User", id)));
+        return this.userRepository.save(user);
+    }
+
+    public List<User> getAllUser(){
+        return userRepository.findAll();
     }
 
 }
