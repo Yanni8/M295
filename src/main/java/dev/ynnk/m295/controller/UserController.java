@@ -1,13 +1,9 @@
 package dev.ynnk.m295.controller;
 
 import dev.ynnk.m295.helper.validation.Create;
-import dev.ynnk.m295.model.Group;
 import dev.ynnk.m295.model.User;
-import dev.ynnk.m295.service.GroupService;
 import dev.ynnk.m295.service.UserService;
-import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
-import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,7 +47,7 @@ public class UserController {
     }
 
     @DeleteMapping("/api/v1/user/{id}")
-    public void deleteGroup(@PathVariable("id") Long id){
+    public void deleteTest(@PathVariable("id") Long id){
         this.service.deleteUser(id);
     }
 }

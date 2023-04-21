@@ -46,7 +46,7 @@ public class GroupController {
 
     @DeleteMapping("/api/v1/group/{id}")
     public void deleteGroup(@PathVariable("id") Long id) {
-        this.deleteGroup(id);
+        this.service.deleteGroup(id);
     }
 
     @PutMapping("/api/v1/group/{id}/join")
