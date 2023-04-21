@@ -41,20 +41,6 @@ public class GroupService {
         );
     }
 
-    public User addUserToGroup(User user, long groupId){
-
-        if (user == null){
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    ErrorMessage.noObjectPresent("User"));
-        }
-
-        Group group = this.getGroupById(groupId);
-
-        user.setGroup(group);
-
-        return this.userRepository.save(user);
-    }
-
     public void deleteGroup(long id){
         this.getGroupById(id);
         this.groupRepository.deleteById(id);

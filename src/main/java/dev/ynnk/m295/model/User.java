@@ -39,9 +39,6 @@ public class User {
     @NotEmpty(groups = Create.class)
     private String lastName;
 
-    @ManyToMany
-    private Set<Group> groups;
-
 
     @JsonGetter
     public Long getId() {
@@ -53,13 +50,5 @@ public class User {
         this.id = id;
     }
 
-    @JsonIgnore
-    public void setGroup(Group group){
-        this.groups.add(group);
-    }
 
-    @JsonIgnore
-    public Set<Group> getGroups() {
-        return groups;
-    }
 }
