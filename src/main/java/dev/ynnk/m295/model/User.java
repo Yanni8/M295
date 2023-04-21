@@ -57,4 +57,9 @@ public class User {
     public void setGroup(Group group){
         this.groups.add(group);
     }
+
+    @JsonIgnore
+    public Set<Group> getGroups() {
+        return groups;
+    }
 }
