@@ -6,6 +6,7 @@ import dev.ynnk.m295.model.dto.AnswerDTO;
 import dev.ynnk.m295.model.dto.SolutionDTO;
 import dev.ynnk.m295.repository.SolutionRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -68,12 +69,17 @@ public class SolutionService {
         return answer;
     }
 
-    public Solution correctTest(SolutionDTO solutionDTO, long testId, long userId) {
+    public Solution correctTest(SolutionDTO solutionDTO, long testId, long userId, Jwt jwt) {
         Test test = this.testService.getTestById(testId);
 
         Solution solution = new Solution();
 
         solution.setUser(this.userService.getUserById(userId));
+
+        if (!solution.getUser().getUsername().equals(jwt.getClaimAsString("preferred_username"))){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                    "You are only allowed to solve a test for your own user")
+        }
 
         solution.setTemplateTest(test);
 
