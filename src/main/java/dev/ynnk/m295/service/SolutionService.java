@@ -78,7 +78,7 @@ public class SolutionService {
 
         if (!solution.getUser().getUsername().equals(jwt.getClaimAsString("preferred_username"))){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,
-                    "You are only allowed to solve a test for your own user")
+                    "You are only allowed to solve a test for your own user");
         }
 
         solution.setTemplateTest(test);
