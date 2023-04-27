@@ -33,10 +33,10 @@ public class UserController {
         return this.service.getAllUser();
     }
 
-    @RolesAllowed(Roles.ADMIN)
+    @RolesAllowed(Roles.USER)
     @GetMapping("/api/v1/user/{id}")
-    public User getUserById(@PathVariable("id") Long id) {
-        return this.service.getUserById(id);
+    public User getUserById(@PathVariable("id") Long id, @AuthenticationPrincipal Jwt jwt) {
+        return this.service.getUserByIdAndJwt(id, jwt);
     }
 
     @RolesAllowed(Roles.ADMIN)
@@ -65,7 +65,7 @@ public class UserController {
     }
 
 
-    @RolesAllowed(Roles.USER)a
+    @RolesAllowed(Roles.USER)
     @GetMapping("/api/v1/user/whoami")
     public User getUserByJwt(@AuthenticationPrincipal Jwt oauth) {
         return this.service.getUserByJwt(oauth);

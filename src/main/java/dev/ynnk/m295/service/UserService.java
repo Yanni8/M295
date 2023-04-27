@@ -36,6 +36,16 @@ public class UserService {
                         ErrorMessage.notFoundById("User", id)));
     }
 
+    public User getUserByIdAndJwt(long id, Jwt jwt){
+        User user = this.getUserById(id);
+
+        if (!user.getUsername().equals(jwt.getClaimAsString("preferred_username"))){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can only request your own user");
+        }
+
+        return user;
+    }
+
     public void deleteUser(long id) {
         this.getUserById(id);
         this.userRepository.deleteById(id);
