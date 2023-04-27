@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.Role;
 import java.util.List;
 
 @RestController
@@ -75,6 +76,7 @@ public class GroupController {
         return this.service.leaveGroup(groupId, userId);
     }
 
+    @RolesAllowed(Roles.USER)
     @GetMapping("/api/v1/group/whoami")
     public List<Group> getGroupsByJwt(@AuthenticationPrincipal Jwt oauth){
         return this.service.findGroupsByJwt(oauth);
