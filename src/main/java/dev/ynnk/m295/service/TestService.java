@@ -12,9 +12,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.net.http.WebSocket;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -48,6 +45,15 @@ public class TestService {
     public Test getTestById(long id) {
         return this.testRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessage.notFoundById("test", id))
+        );
+    }
+
+
+    public Test getTestByIdAndJwt(long id, Jwt jwt){
+        String username = jwt.getClaimAsString("preferred_username");
+        return this.testRepository.findByIdAndUsersUsernameOrIdAndGroupsUsersUsername(id,username, id, username).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.FORBIDDEN,
+                        "Your not allowed to access other once resources")
         );
     }
 

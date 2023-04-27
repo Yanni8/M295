@@ -32,7 +32,6 @@ public class TestController {
 
 
     @RolesAllowed(Roles.ADMIN)
-    @JsonView(View.Metadata.class)
     @GetMapping("/api/v1/test")
     public List<Test> getAllTests() {
         return this.service.getAllTests();
@@ -40,8 +39,8 @@ public class TestController {
 
     @RolesAllowed(Roles.USER)
     @GetMapping("/api/v1/test/{id}")
-    public Test getTestById(@PathVariable("id") Long id) {
-        return this.service.getTestById(id);
+    public Test getTestById(@PathVariable("id") Long id, @AuthenticationPrincipal Jwt jwt) {
+        return this.service.getTestByIdAndJwt(id, jwt);
     }
 
     @RolesAllowed(Roles.ADMIN)
