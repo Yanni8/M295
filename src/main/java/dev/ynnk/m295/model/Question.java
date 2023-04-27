@@ -1,6 +1,9 @@
 package dev.ynnk.m295.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import dev.ynnk.m295.helper.patch.DBPrefer;
+import dev.ynnk.m295.helper.serializer.View;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +17,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Question {
 
     @Id
@@ -24,6 +28,7 @@ public class Question {
 
     @NotNull
     @NotEmpty
+    @JsonView(View.QuestionMetadata.class)
     private String question;
 
     @OneToMany(cascade = {CascadeType.ALL})

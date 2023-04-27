@@ -1,7 +1,10 @@
 package dev.ynnk.m295.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import dev.ynnk.m295.helper.patch.DBPrefer;
+import dev.ynnk.m295.helper.serializer.View;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +22,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Group {
 
     @Id
@@ -28,6 +32,7 @@ public class Group {
 
     @NotNull
     @NotEmpty
+    @JsonView(View.GroupMetadata.class)
     private String groupName;
 
     @ManyToMany

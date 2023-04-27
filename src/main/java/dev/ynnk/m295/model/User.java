@@ -2,7 +2,10 @@ package dev.ynnk.m295.model;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import dev.ynnk.m295.helper.patch.DBPrefer;
+import dev.ynnk.m295.helper.serializer.View;
 import dev.ynnk.m295.helper.validation.Create;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -18,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class User {
 
     @Id
@@ -28,14 +32,17 @@ public class User {
     @NotNull
     @NotEmpty(groups = Create.class)
     @Column(unique = true)
+    @JsonView(View.UserMetadata.class)
     private String username;
 
     @NotNull
     @NotEmpty(groups = Create.class)
+    @JsonView(View.UserMetadata.class)
     private String firstName;
 
     @NotNull
     @NotEmpty(groups = Create.class)
+    @JsonView(View.UserMetadata.class)
     private String lastName;
 
 

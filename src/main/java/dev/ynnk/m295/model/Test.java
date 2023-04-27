@@ -25,11 +25,11 @@ public class Test {
     @Id
     @DBPrefer
     @GeneratedValue
-    @JsonView(View.Metadata.class)
+    @JsonView(View.TestMetadata.class)
     private Long id;
 
     @NotEmpty
-    @JsonView(View.Metadata.class)
+    @JsonView(View.TestMetadata.class)
     private String title;
 
     @OneToMany(cascade = {CascadeType.ALL})

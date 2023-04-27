@@ -31,6 +31,7 @@ public class TestController {
 
 
     @RolesAllowed(Roles.ADMIN)
+    @JsonView(View.Metadata.class)
     @GetMapping("/api/v1/test")
     public List<Test> getAllTests() {
         return this.service.getAllTests();
@@ -68,6 +69,7 @@ public class TestController {
     }
 
     @PutMapping("/api/v1/test/{id}/invite")
+    @JsonView(View.TestMetadata.class)
     public Test inviteTest(@PathVariable("id") Long testId, @RequestParam("id") Long id, @RequestParam(value = "type",
             defaultValue = "user") String type) {
         return this.service.invite(testId, id, type);
@@ -75,14 +77,15 @@ public class TestController {
 
 
     @PutMapping("/api/v1/test/{id}/uninvite")
+    @JsonView(View.TestMetadata.class)
     public Test uninviteTest(@PathVariable("id") Long testId, @RequestParam("id") Long id, @RequestParam(value = "type",
             defaultValue = "user") String type) {
         return this.service.uninvite(testId, id, type);
     }
 
 
-    @JsonView(View.Metadata.class)
     @GetMapping("/api/v1/test/my")
+    @JsonView(View.TestMetadata.class)
     public @ResponseBody List<Test> getOwnTestMetadata(@AuthenticationPrincipal Jwt jwt){
         return this.service.getTestMetdataByJwt(jwt);
     }

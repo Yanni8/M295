@@ -1,7 +1,10 @@
 package dev.ynnk.m295.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import dev.ynnk.m295.helper.patch.DBPrefer;
+import dev.ynnk.m295.helper.serializer.View;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,19 +16,21 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @AllArgsConstructor
 public class Solution {
 
     @Id
     @DBPrefer
     @GeneratedValue
+    @JsonView(View.SolutionMetadata.class)
     private Long id;
 
     @ManyToOne()
     private User user;
 
-    @ManyToOne()
-    private transient Test templateTest;
+    @ManyToOne
+    private Test templateTest;
 
     @OneToMany(cascade = {CascadeType.ALL})
     private Set<Answer> answers;
