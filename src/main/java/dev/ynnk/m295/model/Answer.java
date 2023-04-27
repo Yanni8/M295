@@ -4,26 +4,28 @@ import dev.ynnk.m295.helper.patch.DBPrefer;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+import java.util.Set;
+
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnswerPossibilities {
+public class Answer {
 
     @Id
-    @GeneratedValue
     @DBPrefer
+    @GeneratedValue
     private Long id;
 
-    @NotNull
-    private String answer;
+    @OneToMany
+    private Set<AnswerPossibilities> right;
 
-    @NotNull
-    private transient boolean correctAnswer;
+    @OneToMany
+    private Set<AnswerPossibilities> wrong;
 
 }

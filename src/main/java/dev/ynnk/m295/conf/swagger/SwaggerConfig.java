@@ -1,4 +1,4 @@
-package dev.ynnk.m295.conf;
+package dev.ynnk.m295.conf.swagger;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

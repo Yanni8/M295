@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -38,6 +39,9 @@ public class Group {
 
     @JsonIgnore
     public void addUser(User user){
+        if (this.users == null){
+            this.users = new HashSet<User>();
+        }
         this.users.add(user);
     }
 

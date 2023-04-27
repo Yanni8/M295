@@ -3,13 +3,17 @@ package dev.ynnk.m295.controller;
 import dev.ynnk.m295.helper.validation.Create;
 import dev.ynnk.m295.model.Group;
 import dev.ynnk.m295.service.GroupService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.groups.Default;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@EnableWebSecurity
+@SecurityRequirement(name = "bearerAuth")
 public class GroupController {
 
     public final GroupService service;

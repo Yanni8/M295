@@ -3,13 +3,17 @@ package dev.ynnk.m295.controller;
 import dev.ynnk.m295.helper.validation.Create;
 import dev.ynnk.m295.model.User;
 import dev.ynnk.m295.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.groups.Default;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@EnableWebSecurity
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
 
     private final UserService service;
