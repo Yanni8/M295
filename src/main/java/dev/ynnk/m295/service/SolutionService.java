@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.security.PublicKey;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,13 +19,13 @@ public class SolutionService {
     private final UserService userService;
     private final SolutionRepository solutionRepository;
 
-    public SolutionService(SolutionRepository solutionRepository,TestService testService, UserService userService) {
+    public SolutionService(SolutionRepository solutionRepository, TestService testService, UserService userService) {
         this.solutionRepository = solutionRepository;
         this.testService = testService;
         this.userService = userService;
     }
 
-    public List<Solution> getAllSolutions(){
+    public List<Solution> getAllSolutions() {
         return this.solutionRepository.findAll();
     }
 
@@ -87,7 +86,7 @@ public class SolutionService {
         return solution;
     }
 
-    public Solution findById(long id){
+    public Solution findById(long id) {
         return this.solutionRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         ErrorMessage.notFoundById("solution", id))

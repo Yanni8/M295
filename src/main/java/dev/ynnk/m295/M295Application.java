@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class M295Application {
 
-	public static void main(String... args) {
-		SpringApplication.run(M295Application.class, args);
-	}
+    public static void main(String... args) {
+        SpringApplication.run(M295Application.class, args);
+    }
 
 }

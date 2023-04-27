@@ -1,15 +1,11 @@
 package dev.ynnk.m295.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import dev.ynnk.m295.helper.patch.DBPrefer;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.List;
@@ -45,16 +41,16 @@ public class Test {
 
 
     @JsonIgnore
-    public void setGroup(Group group){
-        if (this.groups == null){
+    public void setGroup(Group group) {
+        if (this.groups == null) {
             this.groups = new HashSet<Group>();
         }
         this.groups.add(group);
     }
 
     @JsonIgnore
-    public void setUser(User user){
-        if (this.users == null){
+    public void setUser(User user) {
+        if (this.users == null) {
             this.users = new HashSet<User>();
         }
         this.users.add(user);

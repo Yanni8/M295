@@ -3,7 +3,6 @@ package dev.ynnk.m295.controller;
 import dev.ynnk.m295.conf.security.Roles;
 import dev.ynnk.m295.helper.validation.Create;
 import dev.ynnk.m295.model.Group;
-import dev.ynnk.m295.model.User;
 import dev.ynnk.m295.service.GroupService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
@@ -14,7 +13,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.relation.Role;
 import java.util.List;
 
 @RestController
@@ -45,17 +43,20 @@ public class GroupController {
     public Group createGroup(@RequestBody @Validated(value = {Default.class, Create.class}) Group group) {
         return this.service.saveGroup(group);
     }
+
     @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/group/{id}")
     public Group updateGroup(@RequestBody @Validated(value = {Default.class, Create.class}) Group group,
                              @PathVariable("id") Long id) {
         return this.service.updateGroup(group, id);
     }
+
     @RolesAllowed(Roles.ADMIN)
     @PatchMapping("/api/v1/group/{id}")
     public Group patchGroup(@RequestBody Group group, @PathVariable("id") Long id) {
         return this.service.patchGroup(group, id);
     }
+
     @RolesAllowed(Roles.ADMIN)
     @DeleteMapping("/api/v1/group/{id}")
     public void deleteGroup(@PathVariable("id") Long id) {
@@ -65,20 +66,20 @@ public class GroupController {
     @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/group/{id}/join")
     public Group joinGroup(@PathVariable("id") Long groupId,
-                           @RequestParam(value = "userId", required = true) Long userId){
+                           @RequestParam(value = "userId", required = true) Long userId) {
         return this.service.joinGroup(groupId, userId);
     }
 
     @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/group/{id}/leave")
     public Group leaveGroup(@PathVariable("id") Long groupId,
-                            @RequestParam(value = "userId", required = true) Long userId){
+                            @RequestParam(value = "userId", required = true) Long userId) {
         return this.service.leaveGroup(groupId, userId);
     }
 
     @RolesAllowed(Roles.USER)
     @GetMapping("/api/v1/group/whoami")
-    public List<Group> getGroupsByJwt(@AuthenticationPrincipal Jwt oauth){
+    public List<Group> getGroupsByJwt(@AuthenticationPrincipal Jwt oauth) {
         return this.service.findGroupsByJwt(oauth);
     }
 }

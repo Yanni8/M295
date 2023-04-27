@@ -38,8 +38,8 @@ public class Group {
     private Set<User> users;
 
     @JsonIgnore
-    public void addUser(User user){
-        if (this.users == null){
+    public void addUser(User user) {
+        if (this.users == null) {
             this.users = new HashSet<User>();
         }
         this.users.add(user);

@@ -22,14 +22,14 @@ public class GroupService {
     private final UserRepository userRepository;
     private final UserService userService;
 
-    public GroupService(GroupRepository groupRepository, UserRepository userRepository, UserService userService){
+    public GroupService(GroupRepository groupRepository, UserRepository userRepository, UserService userService) {
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
         this.userService = userService;
     }
 
-    public Group saveGroup(Group group){
-        if (group == null){
+    public Group saveGroup(Group group) {
+        if (group == null) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
                     ErrorMessage.noObjectPresent("user"));
         }
@@ -37,24 +37,24 @@ public class GroupService {
     }
 
 
-    public Group getGroupById(long id){
+    public Group getGroupById(long id) {
         return this.groupRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         ErrorMessage.notFoundById("Group", id))
         );
     }
 
-    public void deleteGroup(long id){
+    public void deleteGroup(long id) {
         this.getGroupById(id);
         this.groupRepository.deleteById(id);
     }
 
-    public Group patchGroup(Group group, long id){
+    public Group patchGroup(Group group, long id) {
         Group dbGroup = this.getGroupById(id);
 
         Group patchedGroup = AutoPatch.patch(group, dbGroup);
 
-        if (patchedGroup == null){
+        if (patchedGroup == null) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessage.support(511));
         }
 
@@ -63,18 +63,18 @@ public class GroupService {
         return patchedGroup;
     }
 
-    public Group updateGroup(Group group, long id){
+    public Group updateGroup(Group group, long id) {
         group.setId(id);
         this.getGroupById(id);
         return this.groupRepository.save(group);
     }
 
-    public List<Group> getAllGroups(){
+    public List<Group> getAllGroups() {
         return this.groupRepository.findAll();
     }
 
 
-    public Group joinGroup(long groupId, long userId){
+    public Group joinGroup(long groupId, long userId) {
         Group group = this.getGroupById(groupId);
         User user = this.userRepository.findById(userId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -85,7 +85,7 @@ public class GroupService {
         return this.groupRepository.save(group);
     }
 
-    public Group leaveGroup(long groupId, long userId){
+    public Group leaveGroup(long groupId, long userId) {
         Group group = this.getGroupById(groupId);
         Set<User> users = group.getUsers();
 
@@ -97,7 +97,7 @@ public class GroupService {
         return group;
     }
 
-    public List<Group> findGroupsByJwt(Jwt jwt){
+    public List<Group> findGroupsByJwt(Jwt jwt) {
         return this.groupRepository.findByUsersId(this.userService.getUserByJwt(jwt).getId());
     }
 

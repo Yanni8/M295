@@ -31,7 +31,7 @@ public class Solution {
     private Set<Answer> answers;
 
     public void setAnswer(Answer answer) {
-        if (this.answers == null){
+        if (this.answers == null) {
             this.answers = new HashSet<>();
         }
         this.answers.add(answer);

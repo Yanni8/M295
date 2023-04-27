@@ -2,7 +2,6 @@ package dev.ynnk.m295.model.dto;
 
 import dev.ynnk.m295.model.AnswerPossibilities;
 import lombok.Data;
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
 
 import java.util.Set;
 

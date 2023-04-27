@@ -2,20 +2,15 @@ package dev.ynnk.m295.controller;
 
 import dev.ynnk.m295.conf.security.Roles;
 import dev.ynnk.m295.model.Solution;
-import dev.ynnk.m295.model.Test;
 import dev.ynnk.m295.model.dto.SolutionDTO;
 import dev.ynnk.m295.service.SolutionService;
-import dev.ynnk.m295.service.TestService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.persistence.TemporalType;
 import jakarta.websocket.server.PathParam;
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.plaf.SliderUI;
 import java.util.List;
 
 @RestController
@@ -26,33 +21,34 @@ public class SolutionController {
     private final SolutionService service;
 
 
-    public SolutionController(SolutionService service){
+    public SolutionController(SolutionService service) {
         this.service = service;
     }
 
 
     @RolesAllowed(Roles.ADMIN)
     @GetMapping("/api/v1/solution/")
-    public List<Solution> getAllSolutions(){
+    public List<Solution> getAllSolutions() {
         return this.service.getAllSolutions();
     }
+
     @RolesAllowed(Roles.ADMIN)
     @GetMapping("/api/v1/solution/{id}")
-    public Solution getSolutionById(@PathVariable("id") Long solutionId){
+    public Solution getSolutionById(@PathVariable("id") Long solutionId) {
         return this.service.findById(solutionId);
     }
 
     @RolesAllowed(Roles.USER)
     @PostMapping("/api/v1/solution/")
     public Solution correctTest(@RequestBody @Validated SolutionDTO solution,
-                                @PathParam("testID") Long testId, @PathParam("userId") Long userId){
+                                @PathParam("testID") Long testId, @PathParam("userId") Long userId) {
 
         return this.service.correctTest(solution, testId, userId);
     }
 
     @RolesAllowed(Roles.ADMIN)
     @DeleteMapping("/api/v1/solution/{id}")
-    public void deleteSolution(@PathVariable("id") Long solutionId){
+    public void deleteSolution(@PathVariable("id") Long solutionId) {
         this.service.deleteSolution(solutionId);
     }
 

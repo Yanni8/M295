@@ -38,7 +38,7 @@ public final class AutoPatch {
             }
 
             if (providedValue.getClass().isAssignableFrom(Collection.class)
-                    && ((Collection) providedValue).size() == 0){
+                    && ((Collection) providedValue).size() == 0) {
                 continue;
             }
 
