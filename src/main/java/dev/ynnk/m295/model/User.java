@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.ynnk.m295.helper.patch.DBPrefer;
 import dev.ynnk.m295.helper.validation.Create;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,6 +27,7 @@ public class User {
 
     @NotNull
     @NotEmpty(groups = Create.class)
+    @Column(unique = true)
     private String username;
 
     @NotNull
