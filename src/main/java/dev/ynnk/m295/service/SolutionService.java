@@ -4,6 +4,7 @@ import dev.ynnk.m295.helper.language.ErrorMessage;
 import dev.ynnk.m295.model.*;
 import dev.ynnk.m295.model.dto.AnswerDTO;
 import dev.ynnk.m295.model.dto.SolutionDTO;
+import dev.ynnk.m295.repository.SolutionRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,9 +16,10 @@ public class SolutionService {
 
     private final TestService testService;
     private final UserService userService;
+    private final SolutionRepository solutionRepository;
 
-
-    public SolutionService(TestService testService, UserService userService) {
+    public SolutionService(SolutionRepository solutionRepository,TestService testService, UserService userService) {
+        this.solutionRepository = solutionRepository;
         this.testService = testService;
         this.userService = userService;
     }
@@ -48,7 +50,7 @@ public class SolutionService {
         );
 
         Answer answer = new Answer();
-
+        answer.setQuestion(question.getQuestion());
         answer.setRight(question.getAnswerPossibilities().stream().filter(
                 answerPossibilities -> checkIfTrue(answerPossibilities, answerDTO)
         ).collect(Collectors.toSet()));
@@ -73,6 +75,8 @@ public class SolutionService {
         solutionDTO.getAnswers().forEach(
                 answerDTO -> solution.setAnswer(correctAnswer(answerDTO, test))
         );
+
+        this.solutionRepository.save(solution);
 
         return solution;
     }

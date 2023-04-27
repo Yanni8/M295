@@ -18,15 +18,16 @@ public class Solution {
 
     @Id
     @DBPrefer
+    @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne()
     private User user;
 
-    @ManyToOne
+    @ManyToOne()
     private transient Test templateTest;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     private Set<Answer> answers;
 
     public void setAnswer(Answer answer) {
