@@ -65,7 +65,7 @@ public class UserController {
     }
 
 
-    @RolesAllowed(Roles.USER)
+    @RolesAllowed(Roles.USER)a
     @GetMapping("/api/v1/user/whoami")
     public User getUserByJwt(@AuthenticationPrincipal Jwt oauth) {
         return this.service.getUserByJwt(oauth);

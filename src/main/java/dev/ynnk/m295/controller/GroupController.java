@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.Role;
 import java.util.List;
 
 @RestController
@@ -26,13 +27,13 @@ public class GroupController {
         this.service = groupService;
     }
 
-    @RolesAllowed(Roles.USER)
+    @RolesAllowed(Roles.ADMIN)
     @GetMapping("/api/v1/group")
     public List<Group> getAllGroups() {
         return this.service.getAllGroups();
     }
 
-    @RolesAllowed(Roles.USER)
+    @RolesAllowed(Roles.ADMIN)
     @GetMapping("/api/v1/group/{id}")
     public Group getGroupById(@PathVariable("id") long id) {
         return this.service.getGroupById(id);

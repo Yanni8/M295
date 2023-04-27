@@ -9,6 +9,7 @@ import dev.ynnk.m295.service.TestService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.groups.Default;
+import org.springframework.context.annotation.Role;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -63,11 +64,13 @@ public class TestController {
         return this.service.updateTest(test, id);
     }
 
+    @RolesAllowed(Roles.ADMIN)
     @DeleteMapping("/api/v1/test/{id}")
     public void deleteTest(@PathVariable("id") Long id) {
         this.service.deleteTest(id);
     }
 
+    @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/test/{id}/invite")
     @JsonView(View.TestMetadata.class)
     public Test inviteTest(@PathVariable("id") Long testId, @RequestParam("id") Long id, @RequestParam(value = "type",
@@ -76,6 +79,7 @@ public class TestController {
     }
 
 
+    @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/test/{id}/uninvite")
     @JsonView(View.TestMetadata.class)
     public Test uninviteTest(@PathVariable("id") Long testId, @RequestParam("id") Long id, @RequestParam(value = "type",
@@ -84,6 +88,7 @@ public class TestController {
     }
 
 
+    @RolesAllowed(Roles.USER)
     @GetMapping("/api/v1/test/my")
     @JsonView(View.TestMetadata.class)
     public @ResponseBody List<Test> getOwnTestMetadata(@AuthenticationPrincipal Jwt jwt){
