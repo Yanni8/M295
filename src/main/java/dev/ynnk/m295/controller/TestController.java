@@ -88,7 +88,7 @@ public class TestController {
 
 
     @RolesAllowed(Roles.USER)
-    @GetMapping("/api/v1/test/my")
+    @GetMapping("/api/v1/test/whoami")
     @JsonView(View.TestMetadata.class)
     public @ResponseBody List<Test> getOwnTestMetadata(@AuthenticationPrincipal Jwt jwt){
         return this.service.getTestMetdataByJwt(jwt);
