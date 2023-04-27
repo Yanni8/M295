@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.PublicKey;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +24,10 @@ public class SolutionService {
         this.solutionRepository = solutionRepository;
         this.testService = testService;
         this.userService = userService;
+    }
+
+    public List<Solution> getAllSolutions(){
+        return this.solutionRepository.findAll();
     }
 
     private boolean checkIfTrue(AnswerPossibilities expected, AnswerDTO answerDTO) {
@@ -79,5 +85,18 @@ public class SolutionService {
         this.solutionRepository.save(solution);
 
         return solution;
+    }
+
+    public Solution findById(long id){
+        return this.solutionRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        ErrorMessage.notFoundById("solution", id))
+        );
+    }
+
+
+    public void deleteSolution(long id) {
+        this.findById(id);
+        this.solutionRepository.deleteById(id);
     }
 }
