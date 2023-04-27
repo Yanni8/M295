@@ -3,11 +3,14 @@ package dev.ynnk.m295.controller;
 import dev.ynnk.m295.conf.security.Roles;
 import dev.ynnk.m295.helper.validation.Create;
 import dev.ynnk.m295.model.Group;
+import dev.ynnk.m295.model.User;
 import dev.ynnk.m295.service.GroupService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.groups.Default;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,5 +73,10 @@ public class GroupController {
     public Group leaveGroup(@PathVariable("id") Long groupId,
                             @RequestParam(value = "userId", required = true) Long userId){
         return this.service.leaveGroup(groupId, userId);
+    }
+
+    @GetMapping("/api/v1/group/whoami")
+    public List<Group> getGroupsByJwt(@AuthenticationPrincipal Jwt oauth){
+        return this.service.findGroupsByJwt(oauth);
     }
 }

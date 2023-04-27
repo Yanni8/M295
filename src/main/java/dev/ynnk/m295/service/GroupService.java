@@ -7,6 +7,7 @@ import dev.ynnk.m295.model.User;
 import dev.ynnk.m295.repository.GroupRepository;
 import dev.ynnk.m295.repository.UserRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,10 +20,12 @@ public class GroupService {
 
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     public GroupService(GroupRepository groupRepository, UserRepository userRepository, UserService userService){
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     public Group saveGroup(Group group){
@@ -92,6 +95,10 @@ public class GroupService {
         this.groupRepository.save(group);
 
         return group;
+    }
+
+    public List<Group> findGroupsByJwt(Jwt jwt){
+        return this.groupRepository.findByUsersId(this.userService.getUserByJwt(jwt).getId());
     }
 
 }

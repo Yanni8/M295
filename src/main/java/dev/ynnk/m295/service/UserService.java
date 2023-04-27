@@ -7,6 +7,7 @@ import dev.ynnk.m295.helper.patch.AutoPatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -67,4 +68,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
+
+    public User getUserByJwt(Jwt jwt) {
+        String username = jwt.getClaim("preferred_username");
+        return this.userRepository.findByUsername(username)
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "There doesn't exist a User by the Username " + username)
+                );
+    }
 }

@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.groups.Default;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,4 +62,11 @@ public class UserController {
     public void deleteTest(@PathVariable("id") Long id){
         this.service.deleteUser(id);
     }
+
+
+    @GetMapping("/api/v1/user/whoami")
+    public User getUserByJwt(@AuthenticationPrincipal Jwt oauth){
+        return this.service.getUserByJwt(oauth);
+    }
+
 }
