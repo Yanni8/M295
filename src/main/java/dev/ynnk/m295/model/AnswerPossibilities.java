@@ -1,5 +1,6 @@
 package dev.ynnk.m295.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.ynnk.m295.helper.patch.DBPrefer;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +25,10 @@ public class AnswerPossibilities {
     private String answer;
 
     @NotNull
-    private transient boolean correctAnswer;
+    private boolean correctAnswer;
 
+    @JsonIgnore
+    public boolean isCorrectAnswer() {
+        return correctAnswer;
+    }
 }
