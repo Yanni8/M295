@@ -44,6 +44,12 @@ public class TestController {
     }
 
     @RolesAllowed(Roles.ADMIN)
+    @GetMapping("/api/v1/test/{id}/administrator")
+    public Test getTestById(@PathVariable("id") Long id) {
+        return this.service.getTestById(id);
+    }
+
+    @RolesAllowed(Roles.ADMIN)
     @PostMapping("/api/v1/test")
     public Test createTest(@RequestBody @Validated(value = {Default.class, Create.class}) Test test) {
         return this.service.saveTest(test);
@@ -52,7 +58,6 @@ public class TestController {
     @RolesAllowed(Roles.ADMIN)
     @PatchMapping("/api/v1/test/{id}")
     public Test patchTest(@RequestBody Test partialTest, @PathVariable("id") Long id) {
-        System.out.println("Got Here");
         return this.service.patchTest(partialTest, id);
     }
 

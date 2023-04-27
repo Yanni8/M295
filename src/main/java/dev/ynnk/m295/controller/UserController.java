@@ -38,6 +38,11 @@ public class UserController {
     public User getUserById(@PathVariable("id") Long id, @AuthenticationPrincipal Jwt jwt) {
         return this.service.getUserByIdAndJwt(id, jwt);
     }
+    @RolesAllowed(Roles.ADMIN)
+    @GetMapping("/api/v1/user/{id}/administrator")
+    public User getUserById(@PathVariable("id") Long id) {
+        return this.service.getUserById(id);
+    }
 
     @RolesAllowed(Roles.ADMIN)
     @PostMapping("/api/v1/user")
