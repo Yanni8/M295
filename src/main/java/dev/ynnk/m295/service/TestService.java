@@ -8,9 +8,13 @@ import dev.ynnk.m295.model.Test;
 import dev.ynnk.m295.model.User;
 import dev.ynnk.m295.repository.TestRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.net.http.WebSocket;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -102,13 +106,13 @@ public class TestService {
     protected Test uninviteUser(long id, Test test) {
         test.setUsers(test.getUsers().stream().filter(
                 user -> user.getId() != id).collect(Collectors.toSet()));
-        return test;
+        return this.testRepository.save(test);
     }
 
     protected Test uninviteGroup(long id, Test test) {
         test.setGroups(test.getGroups().stream().filter(
                 group -> group.getId() != id).collect(Collectors.toSet()));
-        return test;
+        return this.testRepository.save(test);
     }
 
     public Test uninvite(long testId, long id, String type) {
@@ -116,13 +120,19 @@ public class TestService {
         Test test = this.getTestById(testId);
 
         type = type.toLowerCase(Locale.ENGLISH);
-        if (test.equals("group")) {
+        if (type.equals("group")) {
             return this.uninviteGroup(id, test);
-        } else if (test.equals("user")) {
+        } else if (type.equals("user")) {
             return this.uninviteUser(id, test);
         }
         throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
                 "The URL parameter 'type' needs to be equals to 'group' or 'user'");
+    }
+
+    public List<Test> getTestMetdataByJwt(Jwt jwt){
+        Long userId = this.userService.getUserByJwt(jwt).getId();
+        List<Test> tests = this.testRepository.findByUsersIdOrGroupsUsersId(userId,userId);
+        return this.testRepository.findByUsersIdOrGroupsUsersId(userId,userId);
     }
 
 }
