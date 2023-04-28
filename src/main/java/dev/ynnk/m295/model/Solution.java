@@ -27,12 +27,15 @@ public class Solution {
     private Long id;
 
     @ManyToOne()
+    @JsonView(View.Public.class)
     private User user;
 
     @ManyToOne
+    @JsonView(View.Public.class)
     private Test templateTest;
 
     @OneToMany(cascade = {CascadeType.ALL})
+    @JsonView(View.Public.class)
     private Set<Answer> answers;
 
     public void setAnswer(Answer answer) {

@@ -23,6 +23,7 @@ public class Question {
     @Id
     @GeneratedValue
     @DBPrefer
+    @JsonView(View.Public.class)
     private Long id;
 
 

@@ -28,6 +28,7 @@ public class Group {
     @Id
     @GeneratedValue
     @DBPrefer
+    @JsonView(View.GroupMetadata.class)
     private Long id;
 
     @NotNull
@@ -40,6 +41,7 @@ public class Group {
             name = "group_members",
             joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    @JsonView(View.Public.class)
     private Set<User> users;
 
     @JsonIgnore

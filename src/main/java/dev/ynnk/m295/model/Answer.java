@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 import dev.ynnk.m295.helper.patch.DBPrefer;
 import dev.ynnk.m295.helper.serializer.View;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,11 +26,11 @@ public class Answer {
     @JsonView(View.AnswerMetadata.class)
     private String question;
 
-    @OneToMany
+    @ManyToMany
     @JsonView(View.AnswerMetadata.class)
     private Set<AnswerPossibilities> right;
 
-    @OneToMany
+    @ManyToMany
     @JsonView(View.AnswerMetadata.class)
     private Set<AnswerPossibilities> wrong;
 

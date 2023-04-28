@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class AnswerPossibilities {
 
     @Id
@@ -30,8 +29,10 @@ public class AnswerPossibilities {
     @JsonView(View.AnswerPossibilitiesMetadata.class)
     private String answer;
 
+
     @NotNull
-    private boolean correctAnswer;
+    @JsonView(View.Public.class)
+    private Boolean correctAnswer;
 
     @JsonIgnore
     public boolean isCorrectAnswer() {
