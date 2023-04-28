@@ -6,6 +6,7 @@ import dev.ynnk.m295.helper.serializer.View;
 import dev.ynnk.m295.helper.validation.Create;
 import dev.ynnk.m295.model.Group;
 import dev.ynnk.m295.service.GroupService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.groups.Default;
@@ -35,6 +36,9 @@ public class GroupController {
         return this.service.getAllGroups();
     }
 
+    @Operation(summary = "Get more details by a group that you are a member. " +
+            "You can only access groups that you are a member" +
+            "You need to have a user with a username equal to your jwt username to access this endpoint")
     @RolesAllowed(Roles.USER)
     @GetMapping("/api/v1/group/{id}")
     public Group getGroupById(@PathVariable("id") long id, @AuthenticationPrincipal Jwt jwt) {
@@ -42,6 +46,7 @@ public class GroupController {
     }
 
 
+    @Operation(summary = "Get more details for any group (only admins can request this endpoint)")
     @RolesAllowed(Roles.ADMIN)
     @GetMapping("/api/v1/group/{id}/administrator")
     public Group getGroupById(@PathVariable("id") long id) {
@@ -75,6 +80,7 @@ public class GroupController {
         this.service.deleteGroup(id);
     }
 
+    @Operation(summary = "Can be used to add a user to a group")
     @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/group/{id}/join")
     public Group joinGroup(@PathVariable("id") Long groupId,
@@ -82,6 +88,7 @@ public class GroupController {
         return this.service.joinGroup(groupId, userId);
     }
 
+    @Operation(summary = "Can be used to remove a user from a group")
     @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/group/{id}/leave")
     public Group leaveGroup(@PathVariable("id") Long groupId,
@@ -89,6 +96,8 @@ public class GroupController {
         return this.service.leaveGroup(groupId, userId);
     }
 
+    @Operation(summary = "Get all the groups that you are member " +
+            "You need to have a user with a username equal to your jwt username to access this endpoint")
     @RolesAllowed(Roles.USER)
     @GetMapping("/api/v1/group/whoami")
     public List<Group> getGroupsByJwt(@AuthenticationPrincipal Jwt oauth) {
