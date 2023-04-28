@@ -52,19 +52,21 @@ public class TestController {
 
     @RolesAllowed(Roles.ADMIN)
     @PostMapping("/api/v1/test")
-    public Test createTest(@RequestBody @Validated(value = {Default.class, Create.class}) Test test) {
+    public Test createTest(@RequestBody @Validated(value = {Default.class, Create.class})
+                               @JsonView(View.CreateTest.class) Test test) {
         return this.service.saveTest(test);
     }
 
     @RolesAllowed(Roles.ADMIN)
     @PatchMapping("/api/v1/test/{id}")
-    public Test patchTest(@RequestBody Test partialTest, @PathVariable("id") Long id) {
+    public Test patchTest(@RequestBody @JsonView(View.UpdateTest.class) Test partialTest, @PathVariable("id") Long id) {
         return this.service.patchTest(partialTest, id);
     }
 
     @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/test/{id}")
-    public Test updateTest(@RequestBody @Validated(value = {Default.class, Create.class}) Test test,
+    public Test updateTest(@RequestBody @JsonView(View.UpdateTest.class)
+                               @Validated(value = {Default.class, Create.class}) Test test,
                            @PathVariable("id") Long id) {
         return this.service.updateTest(test, id);
     }

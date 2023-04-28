@@ -29,10 +29,11 @@ public class Test {
     private Long id;
 
     @NotEmpty
-    @JsonView(View.Metadata.class)
+    @JsonView({View.Metadata.class, View.CreateTest.class, View.UpdateTest.class})
     private String title;
 
     @OneToMany(cascade = {CascadeType.ALL})
+    @JsonView({View.Metadata.class, View.CreateTest.class, View.UpdateTest.class})
     private List<Question> questions;
 
     @ManyToMany

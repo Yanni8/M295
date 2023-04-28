@@ -33,7 +33,7 @@ public class Group {
 
     @NotNull
     @NotEmpty
-    @JsonView(View.Metadata.class)
+    @JsonView({View.Metadata.class, View.CreateGroup.class, View.UpdateGroup.class})
     private String groupName;
 
     @ManyToMany
@@ -41,7 +41,7 @@ public class Group {
             name = "group_members",
             joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
-    @JsonView(View.Metadata.class)
+    @JsonView({View.Metadata.class, View.UpdateGroup.class})
     private Set<User> users;
 
     @JsonIgnore

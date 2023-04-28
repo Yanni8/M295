@@ -1,6 +1,8 @@
 package dev.ynnk.m295.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import dev.ynnk.m295.conf.security.Roles;
+import dev.ynnk.m295.helper.serializer.View;
 import dev.ynnk.m295.helper.validation.Create;
 import dev.ynnk.m295.model.User;
 import dev.ynnk.m295.service.UserService;
@@ -46,20 +48,23 @@ public class UserController {
 
     @RolesAllowed(Roles.ADMIN)
     @PostMapping("/api/v1/user")
-    public User createUser(@RequestBody @Validated(value = {Default.class, Create.class}) User user) {
+    public User createUser(@RequestBody @Validated(value = {Default.class, Create.class})
+                               @JsonView({View.CreateAndUpdateUser.class}) User user) {
         return this.service.saveUser(user);
     }
 
     @RolesAllowed(Roles.ADMIN)
     @PatchMapping("/api/v1/user/{id}")
-    public User patchUser(@RequestBody User partialUser, @PathVariable("id") Long id) {
-        System.out.println("Got Here");
+    public User patchUser(@RequestBody  @JsonView({View.CreateAndUpdateUser.class})
+                              User partialUser, @PathVariable("id") Long id) {
         return this.service.patchUser(partialUser, id);
     }
 
     @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/user/{id}")
-    public User updateUser(@RequestBody @Validated(value = {Default.class, Create.class}) User user, @PathVariable("id") Long id) {
+    public User updateUser(@RequestBody  @JsonView({View.CreateAndUpdateUser.class})
+                               @Validated(value = {Default.class, Create.class}) User user,
+                           @PathVariable("id") Long id) {
         return this.service.updateUser(user, id);
     }
 

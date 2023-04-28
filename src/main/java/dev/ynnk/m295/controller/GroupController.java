@@ -1,6 +1,8 @@
 package dev.ynnk.m295.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import dev.ynnk.m295.conf.security.Roles;
+import dev.ynnk.m295.helper.serializer.View;
 import dev.ynnk.m295.helper.validation.Create;
 import dev.ynnk.m295.model.Group;
 import dev.ynnk.m295.service.GroupService;
@@ -48,20 +50,22 @@ public class GroupController {
 
     @RolesAllowed(Roles.ADMIN)
     @PostMapping("/api/v1/group/")
-    public Group createGroup(@RequestBody @Validated(value = {Default.class, Create.class}) Group group) {
+    public Group createGroup(@RequestBody @Validated(value = {Default.class, Create.class})
+                                 @JsonView({View.CreateGroup.class}) Group group) {
         return this.service.saveGroup(group);
     }
 
     @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/group/{id}")
-    public Group updateGroup(@RequestBody @Validated(value = {Default.class, Create.class}) Group group,
+    public Group updateGroup(@RequestBody @Validated(value = {Default.class, Create.class})
+                                 @JsonView({View.UpdateGroup.class}) Group group,
                              @PathVariable("id") Long id) {
         return this.service.updateGroup(group, id);
     }
 
     @RolesAllowed(Roles.ADMIN)
     @PatchMapping("/api/v1/group/{id}")
-    public Group patchGroup(@RequestBody Group group, @PathVariable("id") Long id) {
+    public Group patchGroup(@RequestBody @JsonView({View.UpdateGroup.class}) Group group, @PathVariable("id") Long id) {
         return this.service.patchGroup(group, id);
     }
 

@@ -1,6 +1,8 @@
 package dev.ynnk.m295.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import dev.ynnk.m295.conf.security.Roles;
+import dev.ynnk.m295.helper.serializer.View;
 import dev.ynnk.m295.model.Solution;
 import dev.ynnk.m295.model.dto.SolutionDTO;
 import dev.ynnk.m295.service.SolutionService;
@@ -42,7 +44,7 @@ public class SolutionController {
 
     @RolesAllowed(Roles.USER)
     @PostMapping("/api/v1/solution/")
-    public Solution correctTest(@RequestBody @Validated SolutionDTO solution,
+    public Solution correctTest(@RequestBody @Validated @JsonView({View.AnswerQuestion.class}) SolutionDTO solution,
                                 @PathParam("testID") Long testId, @PathParam("userId") Long userId,
                                 @AuthenticationPrincipal Jwt jwt) {
 

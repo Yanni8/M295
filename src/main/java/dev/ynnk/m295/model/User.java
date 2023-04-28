@@ -27,22 +27,23 @@ public class User {
     @Id
     @GeneratedValue
     @DBPrefer
+    @JsonView({View.UpdateGroup.class})
     private Long id;
 
     @NotNull
     @NotEmpty(groups = Create.class)
     @Column(unique = true)
-    @JsonView(View.Metadata.class)
+    @JsonView({View.Metadata.class, View.CreateAndUpdateUser.class})
     private String username;
 
     @NotNull
     @NotEmpty(groups = Create.class)
-    @JsonView(View.Metadata.class)
+    @JsonView({View.Metadata.class, View.CreateAndUpdateUser.class})
     private String firstName;
 
     @NotNull
     @NotEmpty(groups = Create.class)
-    @JsonView(View.Metadata.class)
+    @JsonView({View.Metadata.class, View.CreateAndUpdateUser.class})
     private String lastName;
 
 
