@@ -45,6 +45,7 @@ public class TestController {
             "You need to have a user with a username equal to your jwt username to access this endpoint" )
     @RolesAllowed(Roles.USER)
     @GetMapping("/api/v1/test/{id}")
+    @JsonView(View.Metadata.class)
     public Test getTestById(@PathVariable("id") Long id, @AuthenticationPrincipal Jwt jwt) {
         return this.service.getTestByIdAndJwt(id, jwt);
     }
