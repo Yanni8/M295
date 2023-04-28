@@ -101,5 +101,12 @@ public class GroupService {
         return this.groupRepository.findByUsersId(this.userService.getUserByJwt(jwt).getId());
     }
 
+    public Group findGroupByIdAndJwt(long id, Jwt jwt) {
+        return this.groupRepository.findByIdAndUsersId(id, this.userService.getUserByJwt(jwt).getId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.FORBIDDEN,
+                        "Your only allowed to access your own resources")
+        );
+    }
+
 }
 

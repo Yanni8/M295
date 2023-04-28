@@ -33,8 +33,15 @@ public class GroupController {
         return this.service.getAllGroups();
     }
 
-    @RolesAllowed(Roles.ADMIN)
+    @RolesAllowed(Roles.USER)
     @GetMapping("/api/v1/group/{id}")
+    public Group getGroupById(@PathVariable("id") long id, @AuthenticationPrincipal Jwt jwt) {
+        return this.service.findGroupByIdAndJwt(id, jwt);
+    }
+
+
+    @RolesAllowed(Roles.ADMIN)
+    @GetMapping("/api/v1/group/{id}/administrator")
     public Group getGroupById(@PathVariable("id") long id) {
         return this.service.getGroupById(id);
     }
