@@ -1,5 +1,6 @@
 package dev.ynnk.m295.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import dev.ynnk.m295.conf.security.Roles;
 import dev.ynnk.m295.helper.serializer.View;
@@ -76,7 +77,7 @@ public class TestController {
 
     @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/test/{id}/invite")
-    @JsonView(View.TestMetadata.class)
+    @JsonView(View.Metadata.class)
     public Test inviteTest(@PathVariable("id") Long testId, @RequestParam("id") Long id, @RequestParam(value = "type",
             defaultValue = "user") String type) {
         return this.service.invite(testId, id, type);
@@ -85,7 +86,7 @@ public class TestController {
 
     @RolesAllowed(Roles.ADMIN)
     @PutMapping("/api/v1/test/{id}/uninvite")
-    @JsonView(View.TestMetadata.class)
+    @JsonView(View.Metadata.class)
     public Test uninviteTest(@PathVariable("id") Long testId, @RequestParam("id") Long id, @RequestParam(value = "type",
             defaultValue = "user") String type) {
         return this.service.uninvite(testId, id, type);
@@ -94,7 +95,7 @@ public class TestController {
 
     @RolesAllowed(Roles.USER)
     @GetMapping("/api/v1/test/whoami")
-    @JsonView(View.TestMetadata.class)
+    @JsonView(View.Metadata.class)
     public @ResponseBody List<Test> getOwnTestMetadata(@AuthenticationPrincipal Jwt jwt){
         return this.service.getTestMetdataByJwt(jwt);
     }

@@ -22,15 +22,16 @@ public class AnswerPossibilities {
     @Id
     @GeneratedValue
     @DBPrefer
-    @JsonView(View.AnswerPossibilitiesMetadata.class)
+    @JsonView(View.Metadata.class)
     private Long id;
 
     @NotNull
-    @JsonView(View.AnswerPossibilitiesMetadata.class)
+    @JsonView(View.Metadata.class)
     private String answer;
 
 
     @NotNull
+    @JsonView(View.Hide.class)
     private boolean correctAnswer;
 
     @JsonIgnore

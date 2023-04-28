@@ -23,19 +23,19 @@ public class Solution {
     @Id
     @DBPrefer
     @GeneratedValue
-    @JsonView(View.SolutionMetadata.class)
+    @JsonView(View.Metadata.class)
     private Long id;
 
     @ManyToOne()
-    @JsonView(View.Public.class)
+    @JsonView(View.Metadata.class)
     private User user;
 
     @ManyToOne
-    @JsonView(View.Public.class)
+    @JsonView(View.Metadata.class)
     private Test templateTest;
 
     @OneToMany(cascade = {CascadeType.ALL})
-    @JsonView(View.Public.class)
+    @JsonView(View.Metadata.class)
     private Set<Answer> answers;
 
     public void setAnswer(Answer answer) {

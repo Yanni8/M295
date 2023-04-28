@@ -32,17 +32,17 @@ public class User {
     @NotNull
     @NotEmpty(groups = Create.class)
     @Column(unique = true)
-    @JsonView(View.UserMetadata.class)
+    @JsonView(View.Metadata.class)
     private String username;
 
     @NotNull
     @NotEmpty(groups = Create.class)
-    @JsonView(View.UserMetadata.class)
+    @JsonView(View.Metadata.class)
     private String firstName;
 
     @NotNull
     @NotEmpty(groups = Create.class)
-    @JsonView(View.UserMetadata.class)
+    @JsonView(View.Metadata.class)
     private String lastName;
 
 

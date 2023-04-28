@@ -23,13 +23,13 @@ public class Question {
     @Id
     @GeneratedValue
     @DBPrefer
-    @JsonView(View.Public.class)
+    @JsonView(View.Metadata.class)
     private Long id;
 
 
     @NotNull
     @NotEmpty
-    @JsonView(View.QuestionMetadata.class)
+    @JsonView(View.Metadata.class)
     private String question;
 
     @OneToMany(cascade = {CascadeType.ALL})

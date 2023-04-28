@@ -25,11 +25,11 @@ public class Test {
     @Id
     @DBPrefer
     @GeneratedValue
-    @JsonView(View.TestMetadata.class)
+    @JsonView(View.Metadata.class)
     private Long id;
 
     @NotEmpty
-    @JsonView(View.TestMetadata.class)
+    @JsonView(View.Metadata.class)
     private String title;
 
     @OneToMany(cascade = {CascadeType.ALL})
@@ -40,7 +40,7 @@ public class Test {
             name = "group_tests",
             joinColumns = @JoinColumn(name = "test_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
-    @JsonView(View.Public.class)
+    @JsonView(View.Hide.class)
     private Set<Group> groups;
 
     @ManyToMany
@@ -48,7 +48,7 @@ public class Test {
             name = "user_tests",
             joinColumns = @JoinColumn(name = "test_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
-    @JsonView(View.Public.class)
+    @JsonView(View.Hide.class)
     private Set<User> users;
 
 

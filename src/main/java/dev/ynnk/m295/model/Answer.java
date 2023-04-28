@@ -23,15 +23,15 @@ public class Answer {
     @GeneratedValue
     private Long id;
 
-    @JsonView(View.AnswerMetadata.class)
+    @JsonView(View.Metadata.class)
     private String question;
 
     @ManyToMany
-    @JsonView(View.AnswerMetadata.class)
+    @JsonView(View.Metadata.class)
     private Set<AnswerPossibilities> right;
 
     @ManyToMany
-    @JsonView(View.AnswerMetadata.class)
+    @JsonView(View.Metadata.class)
     private Set<AnswerPossibilities> wrong;
 
 }
