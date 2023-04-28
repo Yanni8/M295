@@ -31,11 +31,10 @@ public class AnswerPossibilities {
 
 
     @NotNull
-    @JsonView(View.Public.class)
-    private Boolean correctAnswer;
+    private boolean correctAnswer;
 
     @JsonIgnore
     public boolean isCorrectAnswer() {
-        return correctAnswer;
+        return this.correctAnswer;
     }
 }

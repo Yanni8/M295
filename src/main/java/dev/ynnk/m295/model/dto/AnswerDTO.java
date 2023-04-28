@@ -3,6 +3,7 @@ package dev.ynnk.m295.model.dto;
 import com.fasterxml.jackson.annotation.JsonView;
 import dev.ynnk.m295.helper.serializer.View;
 import dev.ynnk.m295.model.AnswerPossibilities;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.Set;
 public class AnswerDTO {
 
     @JsonView(View.Public.class)
+    @NotEmpty
     private Long id;
 
     @JsonView(View.Public.class)
